@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DRApp.ViewModels;assembly=DRApp"
+             xmlns:v="clr-namespace:DRApp.Views;assembly=DRApp"
+             x:Class="DRApp.Views.RoomSelection"
+             x:Name="roomSelection">
+    <!--<ContentPage.BindingContext>
+        <vm:MyRoomsVM/>
+    </ContentPage.BindingContext>-->
+    <NavigationPage.TitleView>
+        <Label Text="nonsenses"/>
+        <!--<ViewCell>
+            <ViewCell.ContextActions>
+
+            </ViewCell.ContextActions>
+        </ViewCell>-->
+    </NavigationPage.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Join Room" Order="Secondary"/>
+        <ToolbarItem Text="Create Room" Order="Secondary"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <FlexLayout Direction="Row" HeightRequest="50">
+                <Label Text="Id"
+                       BackgroundColor="Black"
+                       TextColor="White"
+                       FlexLayout.Grow="1"
+                       WidthRequest="90"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       />
+                <Label Text="Room Name"
+                       BackgroundColor="Black"
+                       TextColor="White"
+                       FlexLayout.Grow="2"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       />
+            </FlexLayout>
+            <!-- ? HasUnevenRows="True" remove litmited height???-->
+            <Label Text="{Binding Source={Binding RoomsVM.SelectedRoom}, Path=Name}"/>
+            <ListView SelectionMode="Single"
+                      HasUnevenRows="True"
+                      BindingContext="{Binding Path=RoomsVM, 
+                                               Source={x:Reference roomSelection},
+                                               Mode=TwoWay}"
+                      ItemsSource="{Binding Path=Rooms, Mode=TwoWay}"
+                      SelectedItem="{Binding Path=SelectedRoom}"
+                      x:Name="listRoom">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <FlexLayout Direction="Row" 
+                                        HeightRequest="50">
+                                <!--<FlexLayout.GestureRecognizers>
+                                    <TapGestureRecognizer BindingContext="{Binding Source={x:Reference roomSelection}, Path=RoomsVM}" 
+                                                          Command="{Binding Path=TapCommand}"
+                                                          CommandParameter="{Binding Source={x:Reference listRoom}, Path=SelectedItem}"/>
+                                </FlexLayout.GestureRecognizers>-->
+                                <Label Text="{Binding Id}"
+                                       FlexLayout.Grow="1"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       />
+                                <Label Text="{Binding Name}"
+                                       FlexLayout.Grow="2"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       />
+                            </FlexLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <!-- <ListView.ItemsSource> -->
+                    <!-- <x:Array Type="{x:Type x:String}"> -->
+                    <!--     <x:String>Baboon</x:String> -->
+                    <!--     <x:String>Capuchin Monkey</x:String> -->
+                    <!--     <x:String>Blue Monkey</x:String> -->
+                    <!--     <x:String>Squirrel Monkey</x:String> -->
+                    <!--     <x:String>Golden Lion Tamarin</x:String> -->
+                    <!--     <x:String>Howler Monkey</x:String> -->
+                    <!--     <x:String>Japanese Macaque</x:String> -->
+                    <!--     <x:String>Me</x:String> -->
+                    <!-- </x:Array> -->
+                <!-- </ListView.ItemsSource> -->
+            </ListView>
+            <Button Text="Test" 
+                    x:Name="testBtn"/>
+            <Label Text="Hot reload"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
