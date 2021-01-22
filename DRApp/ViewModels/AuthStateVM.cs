@@ -3,6 +3,7 @@ using DRApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DRApp.Services;
 using Xamarin.Forms;
 
 namespace DRApp.ViewModels {
@@ -36,12 +37,25 @@ namespace DRApp.ViewModels {
             }
         }
 
+        private string testDIText;
+
+        public string TestDiText
+        {
+            get => testDIText;
+            set {
+                testDIText = value;
+                OnPropertyChanged(nameof(TestDiText));
+            }
+        }
 
         public Command LoginCommand { get; private set; }
         public Command LogoutCommand { get; private set; }
 
         
-        public AuthStateVM() {
+        public AuthStateVM(ITestService testS) {
+            //test
+            TestDiText = testS.TestMethod();
+            
             //this.mainPage = mainPage;
             // TODO check storage to know login or not
             LoginCommand = new Command(Login);

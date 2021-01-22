@@ -12,12 +12,14 @@
         -->
         <FlexLayout JustifyContent="Center"
                     AlignItems="Center"
-                    BackgroundColor="Cyan"
+                    BackgroundColor="DarkCyan"
                     Direction="Column">
+            <Label Text="{Binding TestDiText}"></Label>
             <Label>
                 Login
             </Label>
             <StackLayout WidthRequest="300">
+                <!-- <Label Text="Hot reload"> </Label> -->
                 <Label>Username</Label>
                 <Entry Text="{Binding Username}"/>
                 <Label>Password</Label>

@@ -19,7 +19,7 @@ namespace DRApp.Views {
         }
         // TODO binding model
         // TODO show alert or bread???
-        // TODO check emtpy
+        // TODO check empty
         // TODO send /api/user/auth
 
         protected override void OnAppearing() {
@@ -29,7 +29,7 @@ namespace DRApp.Views {
 
         public void LoginBtnClicked(object o, EventArgs e) {
             //var ukm = (Test)BindingContext;
-            DisplayAlert("yes", "pass.Text", "how to disable this"); // RM  pass is in XAML
+            DisplayAlert("yes", "pass.Text. please fast", "how to disable this"); // RM  pass is in XAML
         }
     }
 

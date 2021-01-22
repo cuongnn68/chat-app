@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace DRApp.Utils {
-    class LocalStorage {
+    static class LocalStorage {
         static int userId;
 
-        static public int UserId {
+        public static int UserId {
             get => userId; 
             set { 
                 userId = value;
@@ -17,7 +17,7 @@ namespace DRApp.Utils {
         }
 
         static string username;
-        static public string Username { 
+        public static string Username { 
             get => username; 
             set {
                 username = value;
@@ -26,7 +26,7 @@ namespace DRApp.Utils {
         }
 
         static string token;
-        static public string Token{ 
+        public static string Token{ 
             get => token;
             set {
                 token = value;
@@ -34,17 +34,17 @@ namespace DRApp.Utils {
             } 
         }
 
-        public async Task UpdateAsync() {
+        public static async Task UpdateAsync() {
             Int32.TryParse(await SecureStorage.GetAsync(nameof(UserId)), out userId);
             Username = await SecureStorage.GetAsync(nameof(Username));
             Token = await SecureStorage.GetAsync(nameof(Token));
         }
 
-        static public async Task<int> TestOut() {
+        public static async Task<int> TestOut() {
             Int32.TryParse(await SecureStorage.GetAsync("Test"),out var o);
             return o;
         }
-        static public void TestIn(int i) {
+        public static void TestIn(int i) {
             SecureStorage.SetAsync("Test", i.ToString());
         }
 

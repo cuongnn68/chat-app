@@ -1,4 +1,5 @@
 ﻿using System;
+using DRApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DRApp.Views;
@@ -6,10 +7,15 @@ using DRApp.ViewModels;
 
 namespace DRApp {
     public partial class App : Application {
-        AuthStateVM authVM;
+        private AuthStateVM authVM;
+
         public App() {
             InitializeComponent();
-            authVM = new AuthStateVM();
+            DI.Init();
+            var str = DI.ServiceProvider.GetService<ITestService>().TestMethod();
+            Console.WriteLine(str);
+            authVM = new AuthStateVM(DI.ServiceProvider.GetService<ITestService>());
+            // authVM = DI.ServiceProvider.GetService<>();
 
 
             //MainPage = new NavigationPage(new RoomSelection()) {
