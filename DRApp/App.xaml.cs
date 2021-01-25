@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using DRApp.Services;
+using DRApp.Utils;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DRApp.Views;
@@ -11,11 +15,28 @@ namespace DRApp {
 
         public App() {
             InitializeComponent();
-            DI.Init();
-            var str = DI.ServiceProvider.GetService<ITestService>().TestMethod();
-            Console.WriteLine(str);
-            authVM = new AuthStateVM(DI.ServiceProvider.GetService<ITestService>());
-            // authVM = DI.ServiceProvider.GetService<>();
+            LocalStorage.UpdateAsync().Wait();
+            #if DEBUG
+            LocalStorage.Domain = "https://discord-ripoff.azurewebsites.net/"; // for pc
+            #else 
+            LocalStorage.Domain = "https://discord-ripoff.azurewebsites.net/"
+            #endif
+            Singleton.HttpClient.UpdateToken();
+            
+            // test
+            // HttpClient client = new HttpClient();
+            // var res2 = client.GetAsync("https://discord-ripoff.azurewebsites.net/api/user/18").Result;
+            // var we = new ApiRequest().CheckAuthAsync();
+            // Console.WriteLine(we);
+            
+            // Singleton.HttpClient.Client.
+            
+
+            authVM = new AuthStateVM();
+
+            // dont use di anymore
+            // DI.Init();
+            // var str = DI.ServiceProvider.GetService<ITestService>().TestMethod();
 
 
             //MainPage = new NavigationPage(new RoomSelection()) {

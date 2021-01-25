@@ -11,13 +11,17 @@ namespace DRApp.Utils
         public BaseClient()
         {
             Client = new HttpClient();
+            UpdateToken();
+        }
+
+        public void UpdateToken()
+        {
             var tokenMem = LocalStorage.Token;
             if (!string.IsNullOrEmpty(tokenMem)) return;
-
             var authHeader = new AuthenticationHeaderValue("bearer", tokenMem);
             Client.DefaultRequestHeaders.Authorization = authHeader;
         }
-
+        
         // bool CheckToken(string token)
         // {
         //     Client.PostAsync()

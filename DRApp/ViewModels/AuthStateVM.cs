@@ -3,11 +3,15 @@ using DRApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using DRApp.Services;
 using Xamarin.Forms;
 
 namespace DRApp.ViewModels {
-    public class AuthStateVM : ViewModel{
+    public class AuthStateVM : ViewModel
+    {
+        private ApiRequest api;
+        
         private Page mainPage;
         private bool isLogin = false;
         public bool IsLogin {
@@ -37,42 +41,45 @@ namespace DRApp.ViewModels {
             }
         }
 
-        private string testDIText;
-
-        public string TestDiText
-        {
-            get => testDIText;
-            set {
-                testDIText = value;
-                OnPropertyChanged(nameof(TestDiText));
-            }
-        }
-
         public Command LoginCommand { get; private set; }
         public Command LogoutCommand { get; private set; }
 
         
-        public AuthStateVM(ITestService testS) {
-            //test
-            TestDiText = testS.TestMethod();
+        public AuthStateVM() {
+
             
-            //this.mainPage = mainPage;
-            // TODO check storage to know login or not
             LoginCommand = new Command(Login);
             LogoutCommand = new Command(Logout);
 
+            //this.mainPage = mainPage;
+            // TODO check storage to know login or not
+            api = new ApiRequest();
+            var logined = api.CheckAuthAsync();
+            Console.WriteLine(logined);
+            Console.WriteLine(LocalStorage.Domain);
+            if (logined) {
+                isLogin = true;
+
+            }
+
+            isLogin = false;
             Logout();
         }
 
-        async void Login() {
+        void Login() {
             //Test
-            await Application.Current.MainPage.DisplayAlert(Username, (await LocalStorage.TestOut()).ToString(), "Ok");
-            Int32.TryParse(Username, out var intUname);
-            LocalStorage.TestIn(intUname);
+            // await Application.Current
+            //     .MainPage
+            //     .DisplayAlert(Username, Password, "Ok");
 
+            var userInfo = api.LoginAsync(Username, Password).Result;
 
-            // TODO check username password
-            //IsLogin = false;
+            LocalStorage.Token = userInfo.Token;
+            LocalStorage.UserId = userInfo.Id;
+            LocalStorage.Username = userInfo.Username;
+            
+            IsLogin = true;
+            Application.Current.MainPage = new NavigationPage(new RoomSelection());
             //if (IsLogin == true) return;
             //Application.Current.MainPage = new NavigationPage(new RoomSelection());
             //IsLogin = true;

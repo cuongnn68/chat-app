@@ -40,14 +40,16 @@
                        />
             </FlexLayout>
             <!-- ? HasUnevenRows="True" remove litmited height???-->
-            <Label Text="{Binding Source={Binding RoomsVM.SelectedRoom}, Path=Name}"/>
+            <Label Text="{Binding Source={Binding Source={x:Reference roomSelection}, Path=SelectedRoom}, 
+                                Path=Name, 
+                                Mode=TwoWay}"/>
             <ListView SelectionMode="Single"
                       HasUnevenRows="True"
                       BindingContext="{Binding Path=RoomsVM, 
                                                Source={x:Reference roomSelection},
                                                Mode=TwoWay}"
                       ItemsSource="{Binding Path=Rooms, Mode=TwoWay}"
-                      SelectedItem="{Binding Path=SelectedRoom}"
+                      SelectedItem="{Binding Path=SelectedRoom, Mode=TwoWay}"
                       x:Name="listRoom">
                 <ListView.ItemTemplate>
                     <DataTemplate>

@@ -5,7 +5,20 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace DRApp.Utils {
-    static class LocalStorage {
+    public static class LocalStorage
+    {
+        private static string domain;
+
+        public static string Domain
+        {
+            get => domain;
+            set
+            {
+                domain = value;
+                SecureStorage.SetAsync(nameof(Domain), value);
+            }
+        }
+        
         static int userId;
 
         public static int UserId {
@@ -35,9 +48,29 @@ namespace DRApp.Utils {
         }
 
         public static async Task UpdateAsync() {
-            Int32.TryParse(await SecureStorage.GetAsync(nameof(UserId)), out userId);
-            Username = await SecureStorage.GetAsync(nameof(Username));
-            Token = await SecureStorage.GetAsync(nameof(Token));
+            try {
+                int.TryParse(await SecureStorage.GetAsync(nameof(UserId)), out userId);
+            } catch  {
+                Console.WriteLine("UserId null");
+            }
+
+            try
+            {
+                Username = await SecureStorage.GetAsync(nameof(Username));
+            }
+            catch
+            {
+                Console.WriteLine("Username empty");
+            }
+
+            try
+            {
+                Token = await SecureStorage.GetAsync(nameof(Token));
+            }
+            catch
+            {
+                Console.WriteLine("Token null");
+            }
         }
 
         public static async Task<int> TestOut() {
